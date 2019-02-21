@@ -1,0 +1,60 @@
+{
+  "name": "Create_RT_Ticket",
+  "version": "1.0",
+  "author": "solsfelder@magellan-net.de",
+  "url": "https://github.com/TheHive-Project/Cortex-Analyzers",
+  "license": "AGPL-V3",
+  "description": "Create a Request Tracker Ticket with information from a TheHive case",
+  "dataTypeList": ["thehive:case"],
+  "command": "RT_Ticket/rt_ticket.py",
+  "baseConfig": "RT_Ticket",
+  "configurationItems": [
+    {
+      "name": "rt_url",
+      "description": "RT REST API URL",
+      "type": "string",
+      "multi": false,
+      "required": true
+    },
+    {
+      "name": "rt_user",
+      "description": "Username",
+      "type": "string",
+      "multi": false,
+      "required": true,
+      "defaultValue": ""
+    },
+    {
+      "name": "rt_pw",
+      "description": "Password",
+      "type": "string",
+      "multi": false,
+      "required": true,
+      "defaultValue": ""
+    },
+       {
+      "name": "rt_queue",
+      "description": "RT target Queue",
+      "type": "string",
+      "multi": false,
+      "required": true,
+      "defaultValue": ""
+    },
+    {
+      "name": "rt_subject",
+      "description": "RT ticket subject",
+      "type": "string",
+      "multi": false,
+      "required": false,
+      "defaultValue": ""
+    },
+    {
+      "name": "rt_body",
+      "description": "RT ticket body",
+      "type": "string",
+      "multi": true,
+      "required": false,
+      "defaultValue": ""
+    }
+  ]
+}
