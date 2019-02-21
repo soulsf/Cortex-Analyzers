@@ -47,10 +47,19 @@ class RT(Responder):
             self.error('Invalid dataType')
 
         caseid = self.get_param('data._id')
+        casenr = str(self.get_param('data.caseId'))
+        subject = self.rt_subject
+
+        if '__thehivetitle__' in subject:
+            subject = subject.replace('__thehivetitle__', title)
+
+        if '__thehivecaseid__' in subject:
+            subject = subject.replace('__thehivecaseid__', casenr)
+
         content = {
             'content': {
-            'Queue': self.rt_queue, 
-            'Subject' : self.rt_subject,
+            'Queue': self.rt_queue,
+            'Subject' : subject,
             'Requestor': req,
             'CF.{'+self.rt_thid+'}' : caseid
             }
@@ -63,12 +72,11 @@ class RT(Responder):
             logger.error(e.response.status_int)
             logger.error(e.response.status)
             logger.error(e.response.parsed)
-        self.report({'message': 'RT Ticket ' + id[0] + ' created successfully'})
+        self.report({'rt_ticket' : id[0]})
 
     def operations(self, raw):
-        return [self.build_operation('AddTagToCase', tag='rt ticket: ' + id[0])]
+        return [self.build_operation('AddTagToCase', tag='rt_ticket:{}'.format(raw['rt_ticket']))]
 
 
 if __name__ == '__main__':
     RT().run()
-    
