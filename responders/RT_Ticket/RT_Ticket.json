@@ -1,7 +1,7 @@
 {
   "name": "Create_RT_Ticket",
-  "version": "1.0",
-  "author": "solsfelder@magellan-net.de",
+  "version": "1.1",
+  "author": "Sven Olsfelder",
   "url": "https://github.com/TheHive-Project/Cortex-Analyzers",
   "license": "AGPL-V3",
   "description": "Create a Request Tracker Ticket with information from a TheHive case",
@@ -49,11 +49,27 @@
       "defaultValue": ""
     },
     {
-      "name": "rt_body",
-      "description": "RT ticket body",
+      "name": "rt_text",
+      "description": "RT ticket text",
       "type": "string",
-      "multi": true,
+      "multi": false,
       "required": false,
+      "defaultValue": ""
+    },
+     {
+      "name": "th_url",
+      "description": "TheHive URL (workaround)",
+      "type": "string",
+      "multi": false,
+      "required": true,
+      "defaultValue": "http://localhost:9000"
+    },
+        {
+      "name": "th_apikey",
+      "description": "TheHive API Key (workaround)",
+      "type": "string",
+      "multi": false,
+      "required": true,
       "defaultValue": ""
     }
   ]
