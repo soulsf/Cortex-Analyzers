@@ -51,7 +51,8 @@ class RT(Responder):
         if self.data_type == 'thehive:case':
             # die if ticket created
             tags = self.get_param('data.tags', None, '')
-            rt_tag = [t[11:] for t in tags if t.startswith(':')]
+            # rt_tag = [t[18:] for t in tags if t.startswith(':')]
+            rt_tag = [t for t in tags if "escalated_ticket" in t]
             if rt_tag:
                 self.error('RT ticket already exists.')
 
@@ -123,10 +124,10 @@ class RT(Responder):
         flag=True,
         startDate=int(time.time())*1000))
 
-        self.report({'' : id[0]})
+        self.report({'escalated_ticket' : id[0]})
 
     def operations(self, raw):
-        return [self.build_operation('AddTagToCase', tag=':{}'.format(raw['escalated_ticket']))]
+        return [self.build_operation('AddTagToCase', tag='escalated_ticket:{}'.format(raw['escalated_ticket']))]
 
 
 if __name__ == '__main__':
