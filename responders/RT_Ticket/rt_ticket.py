@@ -51,17 +51,17 @@ class RT(Responder):
         if self.data_type == 'thehive:case':
             # die if ticket created
             tags = self.get_param('data.tags', None, '')
-            rt_tag = [t[11:] for t in tags if t.startswith('rt_ticket:')]
+            rt_tag = [t[11:] for t in tags if t.startswith(':')]
             if rt_tag:
                 self.error('RT ticket already exists.')
 
 
-            # Search requestor in custom field rt_req
-            req = self.get_param('data.customFields.rt_req.string', None, 'requestor not found in customfield rt_req')
+            # Search requestor in custom field customer_contact
+            req = self.get_param('data.customFields.customer_contact.string', None, 'requestor not found in customfield customer_contact')
             if req:
                 req = req
             else:
-                self.error('requestor not found in customfield rt_req')
+                self.error('requestor not found in customfield customer_contact')
         else:
             self.error('Invalid dataType')
 
@@ -123,10 +123,10 @@ class RT(Responder):
         flag=True,
         startDate=int(time.time())*1000))
 
-        self.report({'rt_ticket' : id[0]})
+        self.report({'' : id[0]})
 
     def operations(self, raw):
-        return [self.build_operation('AddTagToCase', tag='rt_ticket:{}'.format(raw['rt_ticket']))]
+        return [self.build_operation('AddTagToCase', tag=':{}'.format(raw['escalated_ticket']))]
 
 
 if __name__ == '__main__':
