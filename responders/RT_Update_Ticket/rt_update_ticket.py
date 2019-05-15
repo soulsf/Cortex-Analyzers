@@ -36,9 +36,10 @@ class RT(Responder):
             # Search RT Ticket ID in tags
             ticketid = None
             tags = self.get_param('data.case_task.case.tags', None, 'RT Ticket ID not found in tags')
-            ticket_tags = [t[10:] for t in tags if t.startswith('rt_ticket:')]
+            ticket_tags = [t for t in tags if t.startswith('escalated_ticket:')]
             if ticket_tags:
-                ticketid = ticket_tags.pop()
+                ticketidtmp = str(ticket_tags.pop())
+		ticketid = re.findall(r'\d+',ticketidtmp)
             else:
                 self.error('RT Ticket ID not found in tags')
 
@@ -49,7 +50,7 @@ class RT(Responder):
                 }
                 }
             try:
-                response = self.resource.post(path='ticket/'+str(ticketid)+'/comment', payload=content,)
+                response = self.resource.post(path='ticket/'+str(ticketid[0])+'/comment', payload=content,)
                 r = str(response.parsed[0])
             except RTResourceError as e:
                 logger.error(e.response.status_int)
